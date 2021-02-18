@@ -1,0 +1,530 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "https://www.w3.org/TR/html4/loose.dtd">
+<html style="oveflow:hidden;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Day End Report</title>
+<link rel="icon" href="resources/images/tanishq.png">
+<link rel="stylesheet" type="text/css" href="resources/css/titan.css">
+<link rel="stylesheet" type="text/css" href="resources/css/loader.css">
+<link rel="stylesheet" type="text/css" href="resources/css/btn.css">
+<link rel="stylesheet" type="text/css"href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet"href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<link rel="stylesheet"href="https://cdn.datatables.net/buttons/1.6.0/css/buttons.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+
+
+.col_half { width: 49%; }
+.col_third { width: 32%; }
+.col_fourth { width: 23.5%; }
+.col_fifth { width: 18.4%; }
+.col_sixth { width: 15%; }
+.col_three_fourth { width: 74.5%;}
+.col_twothird{ width: 66%;}
+.col_half,
+.col_third,
+.col_twothird,
+.col_fourth,
+.col_three_fourth,
+.col_fifth{
+	position: relative;
+	display:inline;
+	display: inline-block;
+	float: left;
+	margin-right: 2%;
+	margin-bottom: 20px;
+}
+.end { margin-right: 0 !important; }
+/* Column Grids End */
+
+.wrapper { width: 980px; margin: 30px auto; position: relative;}
+.counter { background-color: #ffffff; padding: 20px 0; border-radius: 5px;}
+.count-title { font-size: 40px; font-weight: normal;  margin-top: 10px; margin-bottom: 0; text-align: center; }
+.count-text { font-size: 13px; font-weight: normal;  margin-top: 10px; margin-bottom: 0; text-align: center; }
+.fa-2x { margin: 0 auto; float: none; display: table; color: #4ad1e5; }
+
+
+/*------------------------------------------------------*/
+#click:active {
+	color: white;
+}
+
+#button {
+	background-color: #09d209;
+	font-weight: bold;
+	color: white;
+}
+
+#button:hover {
+	background-color: #08c208;
+}
+
+
+
+
+</style>
+</head>
+<body >
+<div class="logoutdiv" style="display:none;">
+<a href="logout"><button  class="form-control fa fa-sign-out">LogOut</button></a>
+</div>
+	<nav class="navbar navbar-default"
+		style="background-color: #42a9a2;height: 60px;">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+				aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				  <img src="resources/images/logo1.png" alt="Tanishq NPIM" height="57" width="106">
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+			<button class="btn-gradient  small" style="background-color: #818483c4;" onclick="fadin();">ADMIN</button>
+							</ul>
+		</div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container-fluid --> </nav>
+
+	<div id="wrapper" class="active">
+
+		<!-- Sidebar -->
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul id="sidebar_menu" class="sidebar-nav">
+				<li class="sidebar-brand"><a id="menu-toggle" href="#">Menu<span
+						id="main_icon" class="glyphicon glyphicon-align-justify"></span></a></li>
+			</ul>
+			<ul class="sidebar-nav" id="sidebar">
+				<li><a href="loginSubmission">Master Upload</a></li>
+				<li><a href="dayEndReport"  style="color: aqua;">Day-End Report</a></li>
+				<li><a href="hitRatioReport">Hit Ratio Report</a></li>
+				<li><a href="copyStoreItem">Copy Store Items</a></li>
+				<li><a href="sendStoreReport">Send Store Report</a></li>
+				<li><a href="indentConsolidation">Indent consolidation</a></li>
+				<li><a href="lockAndUnlock">Lock and Unlock</a></li>
+				<li><a href="uploadImage" >Images Upload </a></li>
+			</ul>
+		</div>
+
+		<!-- Page content -->
+		<div id="page-content-wrapper">
+			<!-- Keep all page content within the page-content inset div! -->
+			<div class="page-content inset">
+				<div class="container" style="padding: 2px;">
+				 <p style="color: #42a9a2;font-size:20px;text-decoration: underline;">Day End report</p>
+					<form action="">
+
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="form-group">
+
+									<label for="email">Cluster</label> <select class="form-control" id="cluster">
+										<option disabled selected value="">Choose</option>
+										<option>Plain</option>
+										<option>Studded</option>
+									</select>
+
+
+
+								</div>
+
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									<label for="pwd">Level</label> <select class="form-control"
+										id="level">
+										<option disabled selected value="">Choose</option>
+										<option>L1/L2</option>
+										<option>L3</option>
+									</select>
+								</div>
+
+
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									<label>From</label> <input class="form-control datepicker"
+										type="text" name="date" id="from">
+								</div>
+							</div>
+							<div class="col-sm-2">
+								<div class="form-group">
+									<label>To</label> <input class="form-control datepicker"
+										type="text" name="date" id="to">
+								</div>
+							</div>
+
+							<div class="col-sm-2">
+
+								<div class="form-group">
+									<label>&nbsp;&nbsp;</label> <input class="form-control"
+										type="button" id="button" onclick="generateReport();"
+										value="Generate Report">
+								</div>
+
+							</div>
+
+
+						</div>
+
+					</form>
+					<div id="loader" style="position: fixed;margin-left: 38%;margin-top: 2%;display:none">
+					<img  src="resources/images/loader.gif" style="width: 80px;">
+                   <p>Please Wait!!</p>
+			
+					</div>
+					<div id="data" >
+					<div id="counter" style="margin-left: 400px;display:none">
+     <div class="counter col_fourth" style="height: 70px;">
+          <h2 id="dataCount" class="timer count-title count-number" data-to=" " data-speed="1500" style="margin-top: -30px;"></h2>
+      <p class="count-text ">records we found!</p>
+    </div>
+					</div>
+					<div id="ex1">
+	
+		<table id="example1" class="display" width="30%" ></table>
+				</div>
+				<div id="ex2">
+					<table id="example2" class="display" width="30%" ></table>
+		
+				</div>
+				<div id="ex3">
+				<table id="example3" class="display" width="30%" ></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+	<script src="resources/js/titan.js"></script>
+   <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.flash.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.print.min.js"></script>
+	 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+$( function() {
+    $("#to").datepicker({ dateFormat: 'dd-M-yy' });
+    $("#from").datepicker({ dateFormat: 'dd-M-yy' }).bind("change",function(){
+        var minValue = $(this).val();
+        minValue = $.datepicker.parseDate("dd-M-yy", minValue);
+        minValue.setDate(minValue.getDate()+1);
+        $("#to").datepicker( "option", "minDate", minValue );
+    })
+  } );
+
+	function generateReport() {
+		//alert("Hi")
+		
+		var cluster = document.getElementById('cluster').value;
+		var level = document.getElementById('level').value;
+		var fromDate = document.getElementById('from').value;
+		var toDate = document.getElementById('to').value;
+		if(cluster=="" || level=="" || fromDate=="" || toDate==""){
+			alert("Please Choose All Values!!")	
+		}
+		else{
+	 document.getElementById('loader').style.display="block"
+	 $("#data")[0].style="opacity:0.25";
+		$.ajax({
+			type : 'GET',
+			url : "dayEndData",
+			data : "cluster=" + cluster + "&level=" + level + "&fromDate="
+					+ fromDate + "&toDate=" + toDate,
+			success : function(data) { 
+				//alert("Data  " + data);
+				document.getElementById('counter').style.display="block"
+			    document.getElementById('loader').style.display="none"
+				var obj = JSON.parse(data);
+				var DataCount=obj.length;
+				//alert(DataCount)
+				$('#dataCount').html(DataCount); //data('to',DataCount); //setter
+					$("#data")[0].style="opacity:1";
+			
+				if(level=="L3" && cluster=="Studded"){
+					 $('#ex2').hide();
+					 $('#ex3').hide();
+					 $('#ex1').show();
+					$('#example1').DataTable( {
+						"destroy": true,
+						"scrollY": 250,  
+						"scrollX":true,
+						data:obj ,
+	    		        columns: [ 													
+	    		            { title: "IndentDate" },
+	    		            { title: "StrCode" },
+	    		            { title: "ITGroup" },
+	    		            { title: "Category" },
+	    		            { title: "Itemcode" },
+	    		            { title: "ItemQty" },
+	    		            { title: "Size" },
+	    		            { title: "UOM" },
+	    		            { title: "StoneQuality" },
+	    		            { title: "stonequality_val" },
+	    		            { title: "TotCost" },
+	    		            { title: "SetTAg" },
+	    		            { title: "Remarks" },
+	    		            { title: "RevisedItemCode" }
+	    		        ],
+	    		        dom: 'Bfrtip',
+	    		        buttons: [
+	    		             'csv', 'excel'
+	    		        ]
+	    		    } );	
+					
+					
+					
+					
+					
+				}
+				else if(level=="L3" && cluster=="Plain"){
+					 $('#ex1').hide();
+					 $('#ex3').hide();
+					 $('#ex2').show();
+					$('#example2').DataTable( {
+						"destroy": true,
+						"scrollY": 250,    
+						"scrollX":true,
+						data:obj ,
+	    		        columns: [//															
+	    		            { title: "Indent Date" },
+	    		            { title: "Strcode" },
+	    		            { title: "Zone" },
+	    		            { title: "Itgroup" },
+	    		            { title: "Category" },
+	    		            { title: "ItemCode" },
+	    		            { title: "STDUCP" },
+	    		            { title: "StdWt" },
+	    		            { title: "IndQty" },
+	    		            { title: "Size" },
+	    		            { title: "UOM" },
+	    		            { title: "Suggestion" },
+	    		            { title: "TotCost" },
+	    		            { title: "TotWeight" },
+	    		            { title: "RevisedItemCode" },
+	    		            { title: "IndCategory" }
+	    		        ],
+	    		        dom: 'Bfrtip',
+	    		        buttons: [
+	    		             'csv', 'excel'
+	    		        ]
+	    		    } );	
+					
+					
+					
+					
+				}
+				else{
+					 $('#ex1').hide();
+					 $('#ex2').hide();
+					 $('#ex3').show();
+					
+				$('#example3').DataTable( {
+					"destroy": true,
+					"scrollY": 250,   
+					data:obj ,
+    		        columns: [
+    		            { title: "Date Of Entry" },
+    		            { title: "Store Code" },
+    		            { title: "Collection" },
+    		            { title: "Item Code" },
+    		            { title: "Cluster" },
+    		            { title: "Activity" },
+    		            { title: "It Group" },
+    		            { title: "Category" },
+    		            { title: "Saleable" },
+    		            { title: "Resons" },
+    		            { title: "RSO Name" },
+    		        ],
+    		        dom: 'Bfrtip',
+    		        buttons: [
+    		             'csv', 'excel'
+    		        ]
+    		    } );
+				}
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+		}
+	}
+	function DropDown(el) {
+		this.dd = el;
+		this.placeholder = this.dd.children('span');
+		this.opts = this.dd.find('ul.drop li');
+		this.val = '';
+		this.index = -1;
+		this.initEvents();
+	}
+
+	DropDown.prototype = {
+		initEvents : function() {
+			var obj = this;
+			obj.dd.on('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				$(this).toggleClass('active');
+			});
+			obj.opts.on(
+					'click',
+					function() {
+						var opt = $(this);
+						obj.val = opt.text();
+						obj.index = opt.index();
+						obj.placeholder.text(obj.val);
+						opt.siblings().removeClass('selected');
+						opt.filter(':contains("' + obj.val + '")').addClass(
+								'selected');
+					}).change();
+		},
+		getValue : function() {
+			return this.val;
+		},
+		getIndex : function() {
+			return this.index;
+		}
+	};
+
+	$(function() {
+		// create new variable for each menu
+		var dd1 = new DropDown($('#noble-gases'));
+		// var dd2 = new DropDown($('#other-gases'));
+		$(document).click(function() {
+			// close menu on document click
+			$('.wrap-drop').removeClass('active');
+		});
+	});
+	(function ($) {
+		$.fn.countTo = function (options) {
+			options = options || {};
+			
+			return $(this).each(function () {
+				// set options for current element
+				var settings = $.extend({}, $.fn.countTo.defaults, {
+					from:            $(this).data('from'),
+					to:              $(this).data('to'),
+					speed:           $(this).data('speed'),
+					refreshInterval: $(this).data('refresh-interval'),
+					decimals:        $(this).data('decimals')
+				}, options);
+				
+				// how many times to update the value, and how much to increment the value on each update
+				var loops = Math.ceil(settings.speed / settings.refreshInterval),
+					increment = (settings.to - settings.from) / loops;
+				
+				// references & variables that will change with each update
+				var self = this,
+					$self = $(this),
+					loopCount = 0,
+					value = settings.from,
+					data = $self.data('countTo') || {};
+				
+				$self.data('countTo', data);
+				
+				// if an existing interval can be found, clear it first
+				if (data.interval) {
+					clearInterval(data.interval);
+				}
+				data.interval = setInterval(updateTimer, settings.refreshInterval);
+				
+				// initialize the element with the starting value
+				render(value);
+				
+				function updateTimer() {
+					value += increment;
+					loopCount++;
+					
+					render(value);
+					
+					if (typeof(settings.onUpdate) == 'function') {
+						settings.onUpdate.call(self, value);
+					}
+					
+					if (loopCount >= loops) {
+						// remove the interval
+						$self.removeData('countTo');
+						clearInterval(data.interval);
+						value = settings.to;
+						
+						if (typeof(settings.onComplete) == 'function') {
+							settings.onComplete.call(self, value);
+						}
+					}
+				}
+				
+				function render(value) {
+					var formattedValue = settings.formatter.call(self, value, settings);
+					$self.html(formattedValue);
+				}
+			});
+		};
+		
+		$.fn.countTo.defaults = {
+			from: 0,               // the number the element should start at
+			to: 0,                 // the number the element should end at
+			speed: 1000,           // how long it should take to count between the target numbers
+			refreshInterval: 100,  // how often the element should be updated
+			decimals: 0,           // the number of decimal places to show
+			formatter: formatter,  // handler for formatting the value before rendering
+			onUpdate: null,        // callback method for every time the element is updated
+			onComplete: null       // callback method for when the element finishes updating
+		};
+		
+		function formatter(value, settings) {
+			return value.toFixed(settings.decimals);
+		}
+	}(jQuery));
+
+	jQuery(function ($) {
+	  // custom formatting example
+	  $('.count-number').data('countToOptions', {
+		formatter: function (value, options) {
+		  return value.toFixed(options.decimals).replace(/\B(?=(?:\d{3})+(?!\d))/g, ',');
+		}
+	  });
+	  
+	  // start all the timers
+	  $('.timer').each(count);  
+	  
+	  function count(options) {
+		var $this = $(this);
+		options = $.extend({}, options || {}, $this.data('countToOptions') || {});
+		$this.countTo(options);
+	  }
+	});
+
+/* 	$(".buttons-excel").click(function () {
+	    alert("Data is downloading")
+		}); */
+</script>
+</html>
