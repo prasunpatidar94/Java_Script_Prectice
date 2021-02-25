@@ -1,4 +1,4 @@
-console.log('Equality Oprators : === vs == -', 'Truthy and Falsy Values-', "String and Templates-", 'Type conversion and coercion')
+console.log('Equality Oprators : === vs == -Truthy and Falsy Values-String and Templates-Type conversion and coercion - switch case  - ternary oprator for conditional - ')
 
 
 /*console.log("String and Templates")
@@ -166,12 +166,43 @@ else if() {
     console.log('He is  on leave');
 
 }
-*/
+
 console.log("switch case");
 
+let user = 'Gotam';
 
+switch (user) {
+    case 'Prasun':
+        console.log('This is prasun patidar ')
 
+        break;
+    case 'Chetan':
+    case 'Gotam':
 
+        console.log('This is Chetan patidar  and gotam')
 
+        break;
+    case 'Megha':
+        console.log('This is Megha patidar ')
+
+        break;
+    case 'Kamal':
+        console.log('This is Kamal patidar ')
+        break;
+
+    default:
+
+        console.log('This is unknow persone')
+
+        break;
+}
+
+*/
+
+console.log("Ternary Conditional ")
+
+let age = 16
+
+age >= 18 ? console.log('you can drive car if you alredy learnd car') : console.log('you cant do it..');
 
 
